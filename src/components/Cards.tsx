@@ -16,9 +16,11 @@ export function jobLine(doc: Doc, n = 200): string {
     doc.body.match(/\*\*The (?:job|moment|problem):\*\*\s*([^\n]+)/) ??
     doc.body.match(/^\|\s*\*\*The (?:job|moment|problem)\*\*\s*\|\s*([^\n]+?)\s*\|?\s*$/m); // v3 header table row
   const what = doc.body.match(/\*\*What it is:\*\*\s*([^\n]+)/);
-  const s = plainText(job?.[1] ?? what?.[1] ?? doc.body.replace(/^#.*$/m, ""));
+  const line = job?.[1] ?? what?.[1];
+  const s = plainText(line ?? doc.body.replace(/^#.*$/m, ""));
   const first = s.split(/(?<=[.!?])\s+(?=[A-Z])/)[0];
-  return cap(clip(first, n));
+  // A written job line is shown whole; only text pulled from the page body is clipped.
+  return cap(line ? first : clip(first, n));
 }
 
 export function caseSummary(doc: Doc, n = 260): string {
