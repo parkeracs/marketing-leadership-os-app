@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Mark } from "./Mark";
 import { Icon } from "./Icons";
 import { openSearch } from "./SearchPalette";
+import { ThemeToggle } from "./ThemeToggle";
 
 type Item = { href: string; label: string; icon: string; count?: number };
 
@@ -36,11 +37,14 @@ export function Sidebar({ items, demo = false }: { items: Item[]; demo?: boolean
           </Link>
         ))}
       </nav>
-      {!demo && (
-        <Link href="/account" className={`sidebar-account${isActive(path, "/account") ? " active" : ""}`}>
-          Account
-        </Link>
-      )}
+      <div className="sidebar-foot">
+        <ThemeToggle />
+        {!demo && (
+          <Link href="/account" className={`sidebar-account${isActive(path, "/account") ? " active" : ""}`}>
+            Account
+          </Link>
+        )}
+      </div>
     </aside>
   );
 }

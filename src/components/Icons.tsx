@@ -1,6 +1,13 @@
 /** One quiet line-icon set: 24px grid, 1.6 stroke, square-ish joins to match the 2px-corner brand. */
 const paths: Record<string, React.ReactNode> = {
   home: <path d="M4 10.5 12 4l8 6.5V20h-5v-6h-6v6H4z" />,
+  sun: (
+    <>
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8" />
+    </>
+  ),
+  moon: <path d="M19.5 14.5A8 8 0 0 1 9.5 4.5a8 8 0 1 0 10 10z" />,
   playbooks: (
     <>
       <path d="M5 4.5h11.5A2.5 2.5 0 0 1 19 7v12.5H7.5A2.5 2.5 0 0 1 5 17z" />
