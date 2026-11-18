@@ -45,7 +45,7 @@ export function PlaybookCards({ docs, hubs }: { docs: Doc[]; hubs: Doc[] }) {
             key={hub.slug}
             title={hub.title}
             sub={jobLine(hub, 150)}
-            meta={kids.length ? `${kids.length} focused guides` : undefined}
+            meta={kids.length ? `${kids.length} focused ${kids.length === 1 ? "guide" : "guides"}` : undefined}
             href={`/playbooks/${hub.slug}`}
             openLabel={kids.length ? "Open the overview" : "Open playbook"}
           >
