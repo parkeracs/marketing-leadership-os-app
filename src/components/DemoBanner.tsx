@@ -41,7 +41,7 @@ export function DemoBanner() {
         </span>
         .
       </span>
-      <a className="demo-link" href={STARTER_KIT_URL} target="_blank" rel="noreferrer">
+      <a className="demo-link" href={GUIDE_URL} target="_blank" rel="noreferrer">
         Get the free starter kit →
       </a>
     </div>
