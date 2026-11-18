@@ -12,7 +12,9 @@ function clip(s: string, n: number) {
 
 /** The playbook's "The job:" / "The moment:" line, as a capitalised sentence. */
 export function jobLine(doc: Doc, n = 200): string {
-  const job = doc.body.match(/\*\*The (?:job|moment|problem):\*\*\s*([^\n]+)/);
+  const job =
+    doc.body.match(/\*\*The (?:job|moment|problem):\*\*\s*([^\n]+)/) ??
+    doc.body.match(/^\|\s*\*\*The (?:job|moment|problem)\*\*\s*\|\s*([^\n]+?)\s*\|?\s*$/m); // v3 header table row
   const what = doc.body.match(/\*\*What it is:\*\*\s*([^\n]+)/);
   const s = plainText(job?.[1] ?? what?.[1] ?? doc.body.replace(/^#.*$/m, ""));
   const first = s.split(/(?<=[.!?])\s+(?=[A-Z])/)[0];
