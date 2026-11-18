@@ -94,8 +94,8 @@ h1.page-title { font-size: clamp(32px, 4.2vw, 44px); line-height: 1.1; margin: 0
 /* ---------- Shell ---------- */
 .shell { display: grid; grid-template-columns: var(--sidebar) minmax(0, 1fr); min-height: 100vh; }
 .sidebar {
-  position: sticky; top: 0; height: 100vh; overflow-y: auto;
-  border-right: 1px solid var(--line); padding: 30px 18px; display: flex; flex-direction: column; gap: 26px;
+  position: sticky; top: var(--banner-h); height: calc(100dvh - var(--banner-h)); overflow-y: auto;
+  border-right: 1px solid var(--line); padding: 30px 18px 0; display: flex; flex-direction: column; gap: 26px;
 }
 .brand { display: flex; align-items: center; gap: 11px; color: var(--ink); padding: 0 10px; }
 .brand > :first-child { flex-shrink: 0; }
@@ -256,7 +256,7 @@ a.row:hover .t, .row .t a:hover { color: var(--pine); text-decoration: none; }
 .source-cta .host { font-size: 14px; color: var(--ink-faint); }
 .doc-sub { margin: 18px 0 0; font-size: 14px; color: var(--ink-faint); display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; }
 .doc-layout { display: grid; grid-template-columns: minmax(0, 1fr) 220px; gap: 64px; }
-.doc-aside { position: sticky; top: 48px; align-self: start; font-size: 14.5px; }
+.doc-aside { position: sticky; top: calc(48px + var(--banner-h)); align-self: start; font-size: 14.5px; }
 .doc-aside h2 { font-size: 14px; font-weight: 600; color: var(--ink); margin: 0 0 10px; }
 .doc-aside a { display: block; padding: 5px 0 5px 12px; color: var(--ink-muted); border-left: 1px solid var(--line); }
 .doc-aside a.current { color: var(--pine); font-weight: 600; border-left-color: var(--pine); }
@@ -366,7 +366,7 @@ a.row:hover .t, .row .t a:hover { color: var(--pine); text-decoration: none; }
 .prose sup.cite { font-size: 0.7em; line-height: 0; margin-left: 1px; }
 .prose sup.cite a { font-weight: 600; padding: 0 1px; }
 .prose sup.cite + sup.cite { margin-left: 2px; }
-.prose .src-anchor { scroll-margin-top: 90px; }
+.prose .src-anchor { scroll-margin-top: calc(90px + var(--banner-h)); }
 .prose li:has(.src-anchor:target) { background: var(--brass-wash); outline: 6px solid var(--brass-wash); }
 html { scroll-behavior: smooth; }
 .prose p:has(> .embed-img) { margin: 32px 0; }
@@ -402,9 +402,12 @@ html { scroll-behavior: smooth; }
 .corp-badge { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: 0.02em; color: var(--brass); border: 1px solid color-mix(in srgb, var(--brass) 45%, transparent); border-radius: 3px; padding: 1px 6px; margin-left: 8px; }
 
 /* ---------- Account link (sidebar) ---------- */
+/* Pinned to the bottom of the sidebar, so the theme toggle stays in view however long the nav gets. */
 .sidebar-foot {
-  margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  padding: 0 10px calc(env(safe-area-inset-bottom));
+  position: sticky; bottom: 0; margin: auto -18px 0;
+  padding: 14px 28px calc(22px + env(safe-area-inset-bottom));
+  background: var(--stone); border-top: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
 }
 .sidebar-account { font-size: 14px; color: var(--ink-faint); }
 .theme-toggle {
@@ -448,7 +451,12 @@ html { scroll-behavior: smooth; }
 :root { --demo-bg: #7A5A26; --demo-ink: #FBFBF8; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --demo-bg: #C9A15F; --demo-ink: #12140F; } }
 :root[data-theme="dark"] { --demo-bg: #C9A15F; --demo-ink: #12140F; }
+/* Height of the pinned demo banner (0 outside the demo). DemoBanner measures the real height,
+   which grows when the text wraps; 56px covers the first paint. */
+:root { --banner-h: 0px; }
+:root:has(.demo-banner) { --banner-h: 56px; scroll-padding-top: var(--banner-h); }
 .demo-banner {
+  position: sticky; top: 0; z-index: 40;
   display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; min-height: 56px;
   padding: calc(14px + env(safe-area-inset-top)) calc(20px + env(safe-area-inset-right)) 14px calc(20px + env(safe-area-inset-left));
   background: var(--demo-bg); color: var(--demo-ink);
@@ -462,6 +470,11 @@ html { scroll-behavior: smooth; }
 .demo-text a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 .demo-link { font-weight: 700; color: inherit; white-space: nowrap; text-decoration: underline; text-underline-offset: 3px; }
 .demo-link:hover { text-decoration-thickness: 2px; }
+/* Phones: it stays pinned, so keep it to about two lines. */
+@media (max-width: 640px) {
+  .demo-banner { min-height: 0; gap: 4px 10px; font-size: 13.5px; padding-top: calc(9px + env(safe-area-inset-top)); padding-bottom: 9px; }
+  .demo-credit { display: none; }
+}
 .advice-cta .advice-hint a { color: var(--pine-ink); text-decoration: underline; text-underline-offset: 2px; }
 
 /* ---------- Empty state (e.g. Principles in the demo) ---------- */
