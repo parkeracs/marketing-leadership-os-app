@@ -152,6 +152,8 @@ export function plainText(md: string): string {
     .replace(/!\[\[[^\]]+\]\]/g, " ")
     .replace(/\[\[([^\]|]+)(\\?\|([^\]]+))?\]\]/g, (_m, a: string, _b, alias) => alias ?? titleFor(a.split("/").pop()!) ?? a.split("/").pop())
     .replace(/\[!\w+\]/g, " ")
+    .replace(/^\s*\|?(?:\s*:?-{3,}:?\s*\|)+\s*:?-{0,}:?\s*$/gm, " ") // table separator rows (|---|---|)
+    .replace(/^\s*(?:-{3,}|\*{3,}|_{3,})\s*$/gm, " ") // horizontal rules
     .replace(/^\s*(?:[-*+]|\d+\.)\s+/gm, " ")
     .replace(/[#>*_`|[\]()]/g, " ")
     .replace(/\s+/g, " ")
